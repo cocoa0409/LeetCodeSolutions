@@ -1,3 +1,5 @@
+//基本思路，每次去除固定的元素
+
 class Solution {
 public:
 double locate(vector<int> & nums,int s,int e,int value){
