@@ -5,7 +5,7 @@
 //  Created by 兆吉 王 on 2020/3/27.
 //  Copyright © 2020 兆吉 王. All rights reserved.
 //
-
+//仅可一次交易
 int maxProfit(vector<int>& prices) {
     if(prices.size()<=1) return 0;
     
@@ -21,3 +21,22 @@ int maxProfit(vector<int>& prices) {
     }
     return max(curMax,maxV-minV);
 }
+
+//多次交易也可
+int maxProfit(vector<int>& prices) {
+    if(prices.size()<=1) return 0;
+    
+    int minV=prices[0];
+    int maxV=prices[0];
+    int curMax=0;
+    for(int i=1;i<prices.size();i++){
+        if(maxV<prices[i]) maxV=prices[i];
+        if(maxV>prices[i]){
+            curMax+=maxV-minV;
+            maxV=minV=prices[i];
+        }
+    }
+    curMax+=maxV-minV;
+    return curMax;
+}
+
