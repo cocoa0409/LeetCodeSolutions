@@ -13,14 +13,12 @@
  M[n][k][0]=max(M[n-1][k][0],M[n-1][k][1]+prices[n-1])  prices[n-1]为第n天卖出价钱
  M[n][k][1]=max(M[n-1][k][1],M[n-1][k-1][0]-prices[n-1])
  */
-int maxProfit(vector<int>& prices) {
+int maxProfit(int k, vector<int>& prices){
     if(prices.size()<=1) return 0;
-    int TradingTimes=2;
+    int TradingTimes=k;
     vector<vector<vector<int>>> M(prices.size()+1,vector<vector<int>>(TradingTimes+1,vector<int>(2,INT_MIN)));
     for(int n=0;n<=prices.size();n++){
-//        for(int k=0;k<=TradingTimes;k++){
-            M[n][0][0]=0;
-//        }
+        M[n][0][0]=0;
     }
     for(int n=1;n<=prices.size();n++){
         for(int k=1;k<=TradingTimes;k++){
@@ -36,8 +34,14 @@ int maxProfit(vector<int>& prices) {
                 M[n][k][1]=max(M[n-1][k][1],M[n-1][k-1][0] - prices[n-1]);
         }
     }
-    return max(M[prices.size()][0][0],max(M[prices.size()][1][0],M[prices.size()][2][0]));
+    
+    int res=0;
+    for(int k=0;k<=TradingTimes;k++){
+        res=max(res,M[prices.size()][k][0]);
+    }
+    return res;
 }
+
 int main(){
     vector<int> p{1,4,2};
     cout<<maxProfit(p);
